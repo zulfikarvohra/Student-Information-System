@@ -6,14 +6,14 @@ How to run Application?
 
 	3. check the database connection string in appsettings.json file.
 
-	2. Run API Project.
+	4. Run API Project.
 
-	3. Open command line and run "npm install" on "Client" folder to install angular project dependencies.
+	5. Open command line and run "npm install" on "Client" folder to install angular project dependencies.
 
-    4. Check API port in file Student-Information-System/Client/src/app/home/home.component.ts folder.
+  	6. Check API port in file Student-Information-System/Client/src/app/home/home.component.ts folder.
         it may be different on your pc/laptop when you run.
 
-	4. run "ng serve" on "Client" Folder to run the angular project.
+	7. run "ng serve" on "Client" Folder to run the angular project.
 
 	API's Endpoint:
 
