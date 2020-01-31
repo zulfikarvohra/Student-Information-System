@@ -2,7 +2,7 @@ How to run Application?
 
 	1. Open solution in Visual Studio 2017 or later.
 
-	2. Run Database scripts database.sql on sql server database.
+	2. Run SQL Server Database scripts database.sql located on root directory.
 
 	3. check the database connection string in appsettings.json file.
 
