@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace StudentInformationSystem.Entities
 {
   
-        public class DatabaseContext : DbContext
+        public class DatabaseContext :  IdentityDbContext<ApplicationUser>
         {
             public DatabaseContext(DbContextOptions<DatabaseContext> options)
                 : base(options)
@@ -20,7 +21,8 @@ namespace StudentInformationSystem.Entities
                     .WithMany(c => c.Files)
                    .OnDelete(DeleteBehavior.Cascade);
 
-
+            base.OnModelCreating(modelBuilder);
+           
 
         }
         public DbSet<StudentMaster> StudentMaster { get; set; }

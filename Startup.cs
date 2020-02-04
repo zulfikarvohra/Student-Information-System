@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using StudentInformationSystem.Data;
+
 using StudentInformationSystem.Entities;
 using StudentInformationSystem.Handler;
 using StudentInformationSystem.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using StudentInformationSystem.Data;
 
 namespace StudentInformationSystem
 {
@@ -35,11 +33,34 @@ namespace StudentInformationSystem
                   options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
 
             services.AddScoped<StudentRepository>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                  .AddEntityFrameworkStores<DatabaseContext>()
+                  .AddDefaultTokenProviders();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = "http://qualitynet.net",
+                    ValidIssuer = "http://qualitynet.net",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"))
+                };
+            });
+          
             services.AddCors();
 
 
@@ -58,10 +79,10 @@ namespace StudentInformationSystem
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            SeedDB.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             app.UseRouting();
-            app.UseStaticFiles(); 
-
+            app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors(builder =>
     builder.WithOrigins("http://localhost:4200"));
