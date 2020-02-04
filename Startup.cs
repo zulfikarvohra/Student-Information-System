@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using StudentInformationSystem.Data;
+using StudentInformationSystem.Helper;
 
 namespace StudentInformationSystem
 {
@@ -36,10 +37,12 @@ namespace StudentInformationSystem
             services.AddControllers().AddNewtonsoftJson();
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();
-
+            services.Configure<MyConfiguration>(Configuration.GetSection("myConfiguration"));
+           
             services.AddIdentity<ApplicationUser, IdentityRole>()
                   .AddEntityFrameworkStores<DatabaseContext>()
                   .AddDefaultTokenProviders();
+
 
             services.AddAuthentication(options =>
             {
@@ -57,7 +60,7 @@ namespace StudentInformationSystem
                     ValidateAudience = true,
                     ValidAudience = "http://qualitynet.net",
                     ValidIssuer = "http://qualitynet.net",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["myConfiguration:SecretKey"]))
                 };
             });
           

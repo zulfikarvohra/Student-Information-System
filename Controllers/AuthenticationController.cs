@@ -7,7 +7,10 @@ using StudentInformationSystem.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using StudentInformationSystem.Helper;
+using Microsoft.Extensions.Options;
+
 namespace StudentInformationSystem.Controllers
 {
     [ApiController]
@@ -16,10 +19,11 @@ namespace StudentInformationSystem.Controllers
     public class AuthenticationController :Controller
     {
         private UserManager<ApplicationUser> userManager;
-
-        public AuthenticationController(UserManager<ApplicationUser> userManager)
+        private readonly MyConfiguration _myConfiguration;
+        public AuthenticationController(UserManager<ApplicationUser> userManager, IOptions<MyConfiguration> myConfiguration)
         {
             this.userManager = userManager;
+            this._myConfiguration = myConfiguration.Value;
         }
 
         [HttpPost]
@@ -36,7 +40,7 @@ namespace StudentInformationSystem.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_myConfiguration.SecretKey));
 
                 var token = new JwtSecurityToken(
                     issuer: "http://qualitynet.net",

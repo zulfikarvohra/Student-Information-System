@@ -11,6 +11,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,5 +25,9 @@
   <ItemGroup>
     <None Remove=".DS_Store" />
     <None Remove="ReadMe.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Helper\ExtensionMethods.cs" />
+    <Compile Remove="Helper\AppSettings.cs" />
   </ItemGroup>
 </Project>
