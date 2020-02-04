@@ -18,4 +18,8 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Remove=".DS_Store" />
+    <None Remove="ReadMe.md" />
+  </ItemGroup>
 </Project>
