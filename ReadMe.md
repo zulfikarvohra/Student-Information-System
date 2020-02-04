@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 How to run Application?
 
 	1. Open solution in Visual Studio 2017 or later.
@@ -14,6 +15,24 @@ How to run Application?
         it may be different on your pc/laptop when you run.
 
 	7. run "ng serve" on "Client" Folder to run the angular project.
+=======
+﻿How to run Application?
+
+	1. Open solution in Visual Studio 2017 or later.
+
+	2. Run Database scripts database.sql on sql server database.
+
+	3. check the database connection string in appsettings.json file.
+
+	2. Run API Project.
+
+	3. Open command line and run "npm install" on "Client" folder to install angular project dependencies.
+
+    4. Check API port in file Student-Information-System/Client/src/app/home/home.component.ts folder.
+        it may be different on your pc/laptop when you run.
+
+	4. run "ng serve" on "Client" Folder to run the angular project.
+>>>>>>> 3bd9f53... Readme update
 
 	API's Endpoint:
 

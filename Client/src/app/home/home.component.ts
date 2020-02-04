@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent   {
 
   public students: Student[];
-  baseUrl: String = 'http://localhost:49491/api/Student/';
+  baseUrl: String = 'http://localhost:5000/api/Student/';
   dtOptions: DataTables.Settings = {};
 showForm = false;
 student: Student = null;
